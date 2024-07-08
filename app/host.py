@@ -7,7 +7,6 @@ from werkzeug.serving import run_simple
 from app.api.routes import api_bp, print_all_endpoints
 from app.config.config import Config
 from app.models.command_line_args import CommandLineArgs
-from app.runtime.command_line import CommandLine
 
 
 class Host:
@@ -35,22 +34,12 @@ class Host:
         self.config.set_server_port(args.port)
 
         self.logger = logging.getLogger(__name__)
-        self.setup_logging()
 
         # Initialize Flask app
         self.app = Flask(__name__)
 
         # Register blueprints
         self.app.register_blueprint(api_bp)
-
-    def setup_logging(self):
-        """
-        Setup logging configuration.
-        """
-        logging.basicConfig(
-            level=logging.INFO,
-            format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
-        )
 
     def run(self):
         """
@@ -78,7 +67,7 @@ class Host:
         await future
 
 
-if __name__ == "__main__":
-    args = CommandLine.parse_arguments()
-    host = Host(args)
-    host.run()
+# if __name__ == "__main__":
+#     args = CommandLine.parse_arguments()
+#     host = Host(args)
+#     host.run()
