@@ -3,6 +3,7 @@ import os
 
 from dotenv import load_dotenv
 
+from app.helpers.constants import DEFAULT_SERVER_HOST, DEFAULT_SERVER_PORT
 from app.models import SingletonMeta
 
 
@@ -14,6 +15,9 @@ class Config(metaclass=SingletonMeta):
         load_dotenv()  # Load environment variables from .env file
         # Prevent re-initialization
         if not self._is_initialized:
+            self._server = None
+            self._port = None
+
             # Initialize other configuration settings here
             self.logger = logging.getLogger(__name__)
 
@@ -26,3 +30,25 @@ class Config(metaclass=SingletonMeta):
     @staticmethod
     def get(key, default=None):
         return os.getenv(key, default)
+
+    @property
+    def server_host(self):
+        return (
+            self._server
+            if self._server
+            else self.get("SERVER_HOST", DEFAULT_SERVER_HOST)
+        )
+
+    @property
+    def server_port(self):
+        return (
+            self._port
+            if self._port
+            else int(self.get("SERVER_PORT", DEFAULT_SERVER_PORT))
+        )
+
+    def set_server_host(self, host):
+        self._server = host
+
+    def set_server_port(self, port):
+        self._port = port

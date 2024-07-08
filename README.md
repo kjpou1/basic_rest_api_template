@@ -1,11 +1,10 @@
-# BASIC TEMPLATE
+# BASIC_REST_API_TEMPLATE
 
-This is a basic python starting template.
-
+This is a basic Python starting template for a REST API.
 
 ## Table of Contents
 
-- [BASIC TEMPLATE](#basic-template)
+- [BASIC\_REST\_API\_TEMPLATE](#basic_rest_api_template)
   - [Table of Contents](#table-of-contents)
   - [Installation](#installation)
   - [Usage](#usage)
@@ -15,6 +14,9 @@ This is a basic python starting template.
   - [Shell Script](#shell-script)
     - [Shell Script Examples](#shell-script-examples)
     - [Running the Shell Script](#running-the-shell-script)
+  - [API Testing](#api-testing)
+    - [Testing the `/api/salutatio` Endpoint](#testing-the-apisalutatio-endpoint)
+      - [Example Response](#example-response)
   - [License](#license)
 
 ## Installation
@@ -39,9 +41,9 @@ This is a basic python starting template.
     pip install -r requirements.txt
     ```
 
-5. **Set environment file**
+4. **Set environment file**
 
-    Copy or rename the `example_env` file to `.env` before running
+    Copy or rename the `example_env` file to `.env` before running:
 
     ```bash
     cp example_env .env
@@ -53,29 +55,46 @@ To run the library, use the provided `run.py` script with appropriate command-li
 
 ### Command Line Arguments
 
+The following command-line arguments can be used:
+
+- `--server` or `-s`: Specify the server host (default: `0.0.0.0`).
+- `--port` or `-p`: Specify the server port (default: `8080`).
 
 ### Examples
 
-To run the program:
+To run the program with default settings:
 
 ```bash
 python run.py
 ```
+
+To run the program with a specified host and port:
+
+```bash
+python run.py --server 127.0.0.1 --port 5000
+```
+
 ## Configuration
 
 The configuration settings are managed through environment variables and can be set in a `.env` file in the root directory of the project. 
+
 Example `.env` file:
 
 ``` 
-ENV_KEY=example value
+SERVER_HOST=0.0.0.0
+SERVER_PORT=8080
 ```
 
 > [!NOTE]
-> An `example_env` file is provided to get started.  Copy the file to `.env` before running:
+> An `example_env` file is provided to get started. Copy the file to `.env` before running:
+
+```bash
+cp example_env .env
+```
 
 ## Shell Script
 
-A shell script run.sh is provided to automate the execution of the script.
+A shell script `run.sh` is provided to automate the execution of the script.
 
 ### Shell Script Examples
 
@@ -86,15 +105,32 @@ Example `run.sh`
 source ./.venv/bin/activate
 python ./run.py
 deactivate
-
 ```
 
 ### Running the Shell Script
 
-To run the script and clear the directory before running:
+To run the script:
 
 ```bash
 ./run.sh
+```
+
+## API Testing
+
+### Testing the `/api/salutatio` Endpoint
+
+To test the `/api/salutatio` endpoint, you can use the following `curl` command to pass a name parameter:
+
+```sh
+curl -X GET "http://localhost:8080/api/salutatio?name=ego%20draconis"
+```
+
+#### Example Response
+
+```json
+{
+    "greeting": "Salutatio: ego draconis"
+}
 ```
 
 ## License
